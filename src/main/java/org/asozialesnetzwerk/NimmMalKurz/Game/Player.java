@@ -1,5 +1,7 @@
 package org.asozialesnetzwerk.NimmMalKurz.Game;
 
+import org.asozialesnetzwerk.NimmMalKurz.GameUtils;
+
 public class Player {
     private final int id;
 
@@ -7,7 +9,7 @@ public class Player {
 
     public Player(int playerId) {
         this.id = playerId;
-        name = GameUtils.generateRandomName();
+        name = GameUtils.generateRandomPlayerName();
     }
 
     public String getName() {
@@ -16,9 +18,9 @@ public class Player {
 
     @Override
     public String toString() {
-        return "Player{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
+        return "{" +
+                "id:" + id +
+                ", name:'" + name + '\'' +
                 '}';
     }
 

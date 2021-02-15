@@ -14,8 +14,8 @@ ext {
     junitVersion = '5.7.0'
 }
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+sourceCompatibility = 1.15
+targetCompatibility = 1.15
 
 dependencies {
     compileOnly('javax:javaee-api:8.0.1')

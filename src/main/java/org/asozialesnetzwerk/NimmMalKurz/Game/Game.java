@@ -1,6 +1,6 @@
 package org.asozialesnetzwerk.NimmMalKurz.Game;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -9,7 +9,7 @@ public class Game {
     private static final ConcurrentHashMap<Integer, Player> players = new ConcurrentHashMap<>();
 
     private final int gameCode;
-    private final ArrayList<Player> playerList = new ArrayList<>();
+    private final ConcurrentHashMap<Player, Integer> playerMap = new ConcurrentHashMap<>();
 
     private Game(int gameCode) {
         this.gameCode = gameCode;
@@ -27,7 +27,7 @@ public class Game {
         }
     }
 
-    synchronized public Player getOrCreatePlayer(String playerSessionId) {
+    synchronized public static Player getOrCreatePlayer(String playerSessionId) {
         int playerId = playerSessionId.hashCode();
         Player player;
 
@@ -37,15 +37,18 @@ public class Game {
             player = new Player(playerId);
             players.put(playerId, player);
         }
+        return player;
+    }
 
-        if (!playerList.contains(player)) {
-            playerList.add(player);
-        }
-
+    synchronized public Player addPlayer(String playerSessionId) {
+        Player player = Game.getOrCreatePlayer(playerSessionId);
+        playerMap.put(player, 0);
         return player;
     }
 
     public Player[] getPlayers() {
+        List<Player> playerList = new LinkedList<>();
+        playerMap.forEach((player, pw) -> playerList.add(player));
         return playerList.toArray(new Player[0]);
     }
 
